@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Productos</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/stylesProducto.css}">
+    
+</head>
+<body>
+
+    <h1>Productos</h1>
+
+    
+    <div th:if="${mensaje}" style="color: green; font-weight: bold;">
+        <p th:text="${mensaje}"></p>
+    </div>
+    <div th:if="${error}" style="color: red; font-weight: bold;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <a th:href="@{/productos/nuevo}">Nuevo Producto</a>
+
+	<form th:action="@{/productos/buscar}" method="get">
+	    <input type="text" name="busqueda" placeholder="Buscar producto..." 
+	           th:value="${busqueda}" />
+	    <button type="submit">Buscar</button>
+	</form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${productos}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.categoria}"></td>
+                <td th:text="${p.precio}"></td>
+                <td th:text="${p.stock}"></td>
+                <td>
+                    <a th:href="@{'/productos/editar/' + ${p.id}}">Editar</a>
+                    |
+                    <a th:href="@{'/productos/eliminar/' + ${p.id}}"
+                       onclick="return confirm('¿Estás seguro de eliminar este producto?');">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/}">Volver al inicio</a>
+
+</body>
+</html>

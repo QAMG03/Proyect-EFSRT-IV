@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catálogo de Productos</title>
+    <link rel="stylesheet" th:href="@{/css/stylesMovimiento.css}">
+</head>
+<body>
+    <h1>Catálogo de Productos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${productos}">
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.precio}"></td>
+                <td th:text="${p.stock}"></td>
+                <td>
+                    <form th:action="@{/carrito/agregar}" method="post">
+                        <input type="hidden" name="productoId" th:value="${p.id}">
+                        <input type="number" name="cantidad" value="1" min="1" max="99" style="width:60px;" required>
+                        <button type="submit">Agregar</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/carrito/ver}">🛒 Ver Carrito</a> |
+    <a th:href="@{/user-home}">← Volver</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Compras</title>
+    <link rel="stylesheet" th:href="@{/css/stylesVenta.css}">
+</head>
+<body>
+    <h1>🛍️ Mis Compras</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="venta : ${ventas}">
+                <td th:text="${venta.id}"></td>
+                <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy')}"></td>
+                <td th:text="${venta.total}"></td>
+                <td>
+				    <a th:href="@{/ventas/detalle/{id}(id=${venta.id})}" class="btn">🔍 Ver Detalle</a>
+				    <a th:href="@{/ventas/boleta/{id}(id=${venta.id})}" class="btn" target="_blank">🧾 Generar Boleta</a>
+				</td>
+
+            </tr>
+            <tr th:if="${#lists.isEmpty(ventas)}">
+                <td colspan="4" style="text-align: center;">No hay compras registradas.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/user-home}">Volver al inicio</a>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registrar Movimiento</title>
+    <link rel="stylesheet" th:href="@{/css/stylesMovimiento.css}">
+    
+</head>
+<body>
+<h1>Registrar Movimiento</h1>
+
+<form th:action="@{/movimientos/guardar}" th:object="${movimiento}" method="post">
+    <label>Producto:</label>
+    <select th:field="*{producto.id}">
+        <option th:each="p : ${productos}" th:value="${p.id}" th:text="${p.nombre}"></option>
+    </select><br><br>
+
+    <label>Tipo:</label>
+    <select th:field="*{tipo}">
+        <option value="ENTRADA">ENTRADA</option>
+        <option value="SALIDA">SALIDA</option>
+    </select><br><br>
+
+    <label>Cantidad:</label>
+    <input type="number" th:field="*{cantidad}" min="1"/><br><br>
+
+    <label>Observación:</label>
+    <input type="text" th:field="*{observacion}" /><br><br>
+
+    <button type="submit">Registrar</button>
+</form>
+
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+<br>
+<a th:href="@{/movimientos}">Ver Movimientos</a> | 
+<a th:href="@{/}">Inicio</a>
+</body>
+</html>

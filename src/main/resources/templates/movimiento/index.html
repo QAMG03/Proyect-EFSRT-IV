@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movimientos de Stock</title>
+    <link rel="stylesheet" th:href="@{/css/stylesMovimiento.css}">
+</head>
+<body>
+<h1>Movimientos de Stock</h1>
+
+<div class="acciones-top">
+    <a th:href="@{/movimientos/nuevo}">Registrar Movimiento</a>
+    |
+    <a th:href="@{/ventas/reporte-movimientos}" target="_blank">📄 Generar Reporte</a>
+</div>
+
+<form th:action="@{/movimientos/buscar-fechas}" method="get">
+    <label for="desde">Desde:</label>
+    <input type="date" id="desde" name="desde" th:value="${desde}">
+
+    <label for="hasta">Hasta:</label>
+    <input type="date" id="hasta" name="hasta" th:value="${hasta}">
+
+    <button type="submit">Buscar por fechas</button>
+</form>
+
+<div th:if="${mensaje}" class="success">
+    <p th:text="${mensaje}"></p>
+</div>
+<div th:if="${error}" class="error">
+    <p th:text="${error}"></p>
+</div>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Observación</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="m : ${movimientos}">
+            <td th:text="${m.id}">1</td>
+            <td th:text="${m.producto.nombre}">Martillo</td>
+            <td th:text="${m.tipo}">ENTRADA</td>
+            <td th:text="${m.cantidad}">5</td>
+            <td th:text="${#temporals.format(m.fecha, 'dd-MM-yyy')}">2025-06-24</td>
+            <td th:text="${m.observacion}">Reposición</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<a th:href="@{/}">← Volver al inicio</a>
+</body>
+</html>

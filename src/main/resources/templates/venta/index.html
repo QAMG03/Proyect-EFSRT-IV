@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Ventas</title>
+    <link rel="stylesheet" th:href="@{/css/stylesVenta.css}">
+</head>
+<body>
+
+    <h1>📋 Listado de Ventas</h1>
+
+    <div class="top-link">
+        <a class="btn" th:href="@{/ventas/nueva}">+ Registrar Nueva Venta</a>
+    </div>
+	
+	<form th:action="@{/ventas/buscar}" method="get" style="margin-bottom: 20px;">
+	    <label for="id">Buscar venta por ID:</label>
+	    <input type="number" name="id" id="id">
+	    <button type="submit" class="btn">Buscar</button>
+	</form>
+	<div th:if="${error}" class="error" th:text="${error}"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Cliente</th>
+                <th>Acciones</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="venta : ${ventas}">
+                <td th:text="${venta.id}"></td>
+                <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${venta.total}"></td>
+                <td th:text="${venta.cliente.nombres + ' ' + venta.cliente.apellidos}"></td>
+                <td>
+				    <a th:href="@{/ventas/detalle/{id}(id=${venta.id})}">🔍 Ver</a>
+				    &nbsp;|&nbsp;
+				    <form th:action="@{/ventas/eliminar/{id}(id=${venta.id})}" method="post" style="display:inline;">
+					    <button type="submit" onclick="return confirm('¿Deseas eliminar esta venta?');">🗑️ Eliminar</button>
+					</form>
+				    &nbsp;|&nbsp;
+				    <a th:href="@{/ventas/boleta/{id}(id=${venta.id})}" class="btn" target="_blank">🧾 Generar Boleta</a>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/}">← Volver al inicio</a>
+
+</body>
+</html>

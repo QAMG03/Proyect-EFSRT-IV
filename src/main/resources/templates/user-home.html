@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/stylesInicio.css}">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <h2>🛒 Bienvenido</h2>
+        <ul>
+            <li><a th:href="@{/carrito/catalogo}">📦 Catálogo de Productos</a></li>
+            <li><a th:href="@{/carrito/ver}">🛍️ Ver Carrito</a></li>
+        	<li><a th:href="@{/ventas/mis-compras}" class="btn">🛍️ Ver Mis Compras</a></li>
+        	  
+        
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-button">🔓 Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <h1>¡Bienvenido a Ferretería Wally!</h1>
+        <p>Desde aquí puedes explorar productos, agregarlos a tu carrito y realizar compras fácilmente.</p>
+    </main>
+</div>
+
+<footer>
+    <p>&copy; 2025 Ferretería Wally. Todos los derechos reservados.</p>
+</footer>
+</body>
+</html>

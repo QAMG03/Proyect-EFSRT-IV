@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/css/stylesLogin.css}" />
+</head>
+<body>
+<div class="container">
+    <h2>Registro de usuario</h2>
+
+    <form th:action="@{/register}" method="post" th:object="${usuario}">
+        <label>Usuario:</label>
+        <input type="text" th:field="*{username}" required/>
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red;"></span>
+
+        <label>Contraseña:</label>
+        <input type="password" th:field="*{password}" required/>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;"></span>
+
+        <label>Nombres:</label>
+        <input type="text" th:field="*{nombres}" required/>
+        <span th:if="${#fields.hasErrors('nombres')}" th:errors="*{nombres}" style="color:red;"></span>
+
+        <label>Apellidos:</label>
+        <input type="text" th:field="*{apellidos}" required/>
+        <span th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" style="color:red;"></span>
+
+        <label>DNI:</label>
+        <input type="text" th:field="*{dni}" required/>
+        <span th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" style="color:red;"></span>
+
+        <label>Dirección:</label>
+        <input type="text" th:field="*{direccion}" required/>
+        <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" style="color:red;"></span>
+
+        <label>Teléfono:</label>
+        <input type="text" th:field="*{telefono}" required/>
+        <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" style="color:red;"></span>
+
+        <button type="submit">Registrar</button>
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+            </ul>
+        </div>
+    </form>
+
+    <div th:if="${error}" th:text="${error}" class="message error"></div>
+    <div th:if="${success}" th:text="${success}" class="message success"></div>
+
+    <p style="text-align: center; margin-top: 12px;">
+        <a th:href="@{/login}">Volver al login</a>
+    </p>
+</div>
+</body>
+</html>

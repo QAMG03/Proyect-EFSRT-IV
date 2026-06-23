@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/stylesCliente.css}">
+</head>
+<body>
+    <h1>Clientes</h1>
+
+    <div th:if="${mensaje}" class="success">
+        <p th:text="${mensaje}"></p>
+    </div>
+
+    <div th:if="${error}" class="error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <a th:href="@{/clientes/nuevo}">➕ Nuevo Cliente</a>
+
+    <form th:action="@{/clientes/buscar}" method="get">
+        <input type="text" name="busqueda" placeholder="Buscar por nombre o DNI"
+               th:value="${busqueda}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${clientes}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.nombres}"></td>
+                <td th:text="${c.apellidos}"></td>
+                <td th:text="${c.dni}"></td>
+                <td th:text="${c.telefono}"></td>
+                <td th:text="${c.estado}"></td>
+                <td>
+				    <a th:href="@{'/clientes/editar/' + ${c.id}}">Editar</a>
+				
+				    <span th:if="${c.estado != 'INACTIVO'}">
+				        | <a th:href="@{'/clientes/eliminar/' + ${c.id}}"
+				             onclick="return confirm('¿Estás seguro de que deseas suspender este cliente?');">
+				             Suspender
+				        </a>
+				    </span>
+				
+				    <span th:if="${c.estado == 'INACTIVO'}">
+				        | <a th:href="@{'/clientes/reactivar/' + ${c.id}}"
+				             onclick="return confirm('¿Deseas reactivar este cliente?');">
+				             Reactivar
+				        </a>
+				    </span>
+				
+				    | <a th:href="@{'/clientes/eliminar-definitivo/' + ${c.id}}"
+				         onclick="return confirm('¿Eliminar definitivamente este cliente? Esta acción no se puede deshacer.');">
+				         Eliminar
+				    </a>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/}">Volver al inicio</a>
+</body>
+</html>

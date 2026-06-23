@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${cliente.id == null ? 'Nuevo Cliente' : 'Editar Cliente'}">Formulario</title>
+    <link rel="stylesheet" th:href="@{/css/stylesCliente.css}">
+
+</head>
+<body>
+
+<h1 th:text="${cliente.id == null ? 'Nuevo Cliente' : 'Editar Cliente'}"></h1>
+
+<div th:if="${error}" class="error-msg" th:text="${error}"></div>
+
+<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Nombres:</label>
+    <input type="text" th:field="*{nombres}" />
+    <div th:if="${#fields.hasErrors('nombres')}" class="error" th:errors="*{nombres}"></div>
+
+    <label>Apellidos:</label>
+    <input type="text" th:field="*{apellidos}" />
+    <div th:if="${#fields.hasErrors('apellidos')}" class="error" th:errors="*{apellidos}"></div>
+
+    <label>DNI:</label>
+    <input type="text" th:field="*{dni}" />
+    <div th:if="${#fields.hasErrors('dni')}" class="error" th:errors="*{dni}"></div>
+
+    <label>Dirección:</label>
+    <input type="text" th:field="*{direccion}" />
+    <div th:if="${#fields.hasErrors('direccion')}" class="error" th:errors="*{direccion}"></div>
+
+    <label>Teléfono:</label>
+    <input type="text" th:field="*{telefono}" />
+    <div th:if="${#fields.hasErrors('telefono')}" class="error" th:errors="*{telefono}"></div>
+
+    <button type="submit">Guardar</button>
+    <a th:href="@{/clientes/lista}">Cancelar</a>
+</form>
+
+
+</body>
+</html>

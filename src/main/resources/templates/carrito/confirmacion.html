@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Compra</title>
+    <link rel="stylesheet" th:href="@{/css/stylesCarrito.css}">
+</head>
+<body>
+
+    <h1>🛒 Confirmación de Compra</h1>
+
+    <div th:if="${mensaje}" style="color: green; font-weight: bold; margin-bottom: 20px;">
+        <p th:text="${mensaje}"></p>
+    </div>
+
+    <div th:if="${error}" style="color: red; font-weight: bold; margin-bottom: 20px;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a th:href="@{/carrito/ver}" style="text-decoration: none; color: #3498db; font-weight: bold;">← Volver al carrito</a>
+        |
+       
+    </div>
+
+    <div th:if="${ventaId}" style="margin-top: 30px;">
+        <form th:action="@{'/ventas/boleta/' + ${ventaId}}" method="get" target="_blank">
+            <button type="submit" style="padding: 10px 20px; background-color: #3498db; color: white; font-weight: bold; border: none; border-radius: 5px;">
+                🧾 Generar Boleta PDF
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

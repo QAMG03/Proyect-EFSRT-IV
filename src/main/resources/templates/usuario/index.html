@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+    <link rel="stylesheet" th:href="@{/css/stylesCliente.css}" />
+</head>
+<body>
+
+    <div th:if="${error}" class="message error" th:text="${error}"></div>
+    <div th:if="${success}" class="message success" th:text="${success}"></div>
+
+    <h1>Lista de Usuarios</h1>
+
+    
+    <div style="margin-bottom: 20px;">
+        <form th:action="@{/admin/usuarios/buscar}" method="get">
+            <label for="id">Buscar por ID:</label>
+            <input type="number" name="id" id="id">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.id}"></td>
+                <td th:text="${usuario.username}"></td>
+                <td th:text="${usuario.nombres + ' ' + usuario.apellidos}"></td>
+                <td th:text="${usuario.dni}"></td>
+                <td th:text="${usuario.rol}"></td>
+                <td th:text="${usuario.estado}"></td>
+                <td>
+                    <a th:href="@{'/admin/usuarios/editar/' + ${usuario.id}}" class="btn-editar">✏️ Editar</a>
+                    <a th:href="@{'/admin/usuarios/estado/' + ${usuario.id}}">[Cambiar Estado]</a> |
+                    <a th:href="@{'/admin/usuarios/eliminar/' + ${usuario.id}}"
+                       onclick="return confirm('¿Deseas eliminar este usuario?')">Eliminar</a>
+                </td>
+            </tr>
+           
+            <tr th:if="${#lists.isEmpty(usuarios)}">
+                <td colspan="7" style="text-align: center; color: gray;">No se encontraron usuarios.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/admin-home}">← Volver</a>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ferretería Wally - Inicio</title>
+    <link rel="stylesheet" th:href="@{/css/stylesInicio.css}">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <h2>🛠️ Ferretería Wally</h2>
+        <ul>
+            <li><a th:href="@{/ventas/lista}">📋 Ventas</a></li>
+            <li><a th:href="@{/clientes/lista}">👥 Clientes</a></li>
+            <li><a th:href="@{/productos/lista}">📦 Productos</a></li>
+            <li><a th:href="@{/movimientos}">📈 Movimientos de Stock</a></li>
+            <li><a th:href="@{/admin/usuarios}">🔐 Gestión de Usuarios</a></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-button">🔓 Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <h1>Bienvenido a Ferretería Wally</h1>
+        <p>Selecciona una opción del menú para comenzar a gestionar el sistema.</p>
+        
+    </main>
+</div>
+
+<footer>
+    <p>&copy; 2025 Ferretería Wally. Todos los derechos reservados.</p>
+</footer>
+</body>
+</html>

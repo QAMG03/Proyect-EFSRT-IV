@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Venta</title>
+    <link rel="stylesheet" th:href="@{/css/stylesVentaForm.css}">
+</head>
+<body>
+
+<h1>Registrar Nueva Venta</h1>
+
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+
+<form th:action="@{/ventas/guardar}" th:object="${venta}" method="post">
+    <!-- Acción oculta para saber si es guardar o agregar -->
+    <input type="hidden" name="accion" id="accionField" value="guardar"/>
+
+    <!-- Cliente -->
+    <label>Cliente:</label>
+    <select th:field="*{cliente.id}">
+        <option value="">-- Seleccionar Cliente --</option>
+        <option th:each="cliente : ${clientes}"
+                th:value="${cliente.id}"
+                th:text="${cliente.nombres + ' ' + cliente.apellidos}">
+        </option>
+    </select>
+    <br/><br/>
+
+    <!-- Detalles -->
+    <h3>Productos</h3>
+    <div th:each="detalle, iterStat : *{detalles}">
+        <label>Producto:</label>
+        <select th:name="detalles[__${iterStat.index}__].producto.id">
+            <option value="">-- Seleccionar --</option>
+            <option th:each="p : ${productos}"
+                    th:value="${p.id}"
+                    th:selected="${p.id == detalle.producto?.id}"
+                    th:text="${p.nombre + ' (Stock: ' + p.stock + ')'}">
+            </option>
+        </select>
+
+        <label>Cantidad:</label>
+        <input type="number" min="1"
+               th:name="detalles[__${iterStat.index}__].cantidad"
+               th:value="${detalle.cantidad}" />
+        <br/><br/>
+    </div>
+
+    <!-- Botones -->
+    <button type="submit" class="btn"
+            onclick="document.getElementById('accionField').value='guardar'">Guardar Venta</button>
+
+    <button type="submit" class="btn"
+            onclick="document.getElementById('accionField').value='agregar'">+ Añadir Producto</button>
+
+    <a th:href="@{/ventas/lista}" class="btn" style="margin-left: 10px;">Volver al listado</a>
+</form>
+
+</body>
+</html>
